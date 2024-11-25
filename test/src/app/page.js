@@ -5,51 +5,6 @@ import { ChevronRight, Menu } from 'lucide-react'
 export default function Home() {
   return (
     <div className="min-h-screen bg-amber-50">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center">
-              <Link href="/" className="flex items-center">
-                <Image
-                  src="/NaanStopWok.jpg" alt="Naan Stop Wok Logo" style="border-radius: 35px; height: 40px; width: 40px;"
-                  width={40}
-                  height={40}
-                  className="h-10 w-10"
-                />
-                <span className="ml-2 text-xl font-bold text-orange-600">Naan Stop Wok</span>
-              </Link>
-            </div>
-            
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-8">
-                {['Menu', 'About Us', 'Reservations', 'Contact'].map((item) => (
-                  <Link
-                    key={item}
-                    href={`/${item.toLowerCase().replace(' ', '-')}`}
-                    className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
-                  >
-                    {item}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-4">
-              <button className="md:hidden">
-                <Menu className="h-6 w-6 text-gray-700" />
-              </button>
-              <Link
-                href="/login"
-                className="inline-flex items-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700 transition-colors"
-              >
-                Log In
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
 
       {/* Hero Section */}
       <div className="relative h-[70vh] overflow-hidden">

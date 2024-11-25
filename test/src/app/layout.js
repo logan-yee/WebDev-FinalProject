@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import localFont from "next/font/local";
+import Navbar from './components/navbar';
 import "./globals.css";
 
 const inter = Inter({ subsets: ['latin'] })
@@ -24,7 +25,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+
       <body className={`${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-amber-50 text-gray-900`}>
+        <Navbar />
         {children}
       </body>
     </html>
