@@ -1,32 +1,156 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import { ChevronRight, Menu } from 'lucide-react'
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1>Naan Stop Wok</h1>
-        <h2>About the restaurant</h2>
-          <p>blah blah blah</p>
-      </main>
-      <footer className="row-start-3 flex flex-wrap gap-20 items-center justify-center">
-        <div className="flex flex-col items-center gap-2">
-          <h1>Location</h1>
-          <p>2000 Simcoe St N, Oshawa, ON L1G 0C5</p>
+    <div className="min-h-screen bg-amber-50">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center">
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/NaanStopWok.jpg" alt="Naan Stop Wok Logo" style="border-radius: 35px; height: 40px; width: 40px;"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10"
+                />
+                <span className="ml-2 text-xl font-bold text-orange-600">Naan Stop Wok</span>
+              </Link>
+            </div>
+            
+            {/* Desktop Navigation */}
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-center space-x-8">
+                {['Menu', 'About Us', 'Reservations', 'Contact'].map((item) => (
+                  <Link
+                    key={item}
+                    href={`/${item.toLowerCase().replace(' ', '-')}`}
+                    className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                  >
+                    {item}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-4">
+              <button className="md:hidden">
+                <Menu className="h-6 w-6 text-gray-700" />
+              </button>
+              <Link
+                href="/login"
+                className="inline-flex items-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700 transition-colors"
+              >
+                Log In
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <h1>Hours</h1>
-          <p>
-            Monday to Thursday 2pm - 3pm
-            <br />
-            Thursday to Sunday 1am - 6am
-          </p>
-        </div>
-        <div className="flex flex-col items-center gap-2">
-          <h1>Contact Us</h1>
-          <p>info@naanstopwok.com</p>
-          <p>416-123-4567</p>
-        </div>
-      </footer>
+      </nav>
 
+      {/* Hero Section */}
+      <div className="relative h-[70vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <Image
+            src="/Banner.jpg?height=800&width=1600"
+            alt="Restaurant Ambiance"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
+        </div>
+        
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-full flex items-center">
+          <div className="max-w-xl">
+            <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
+              Welcome to
+              <span className="block text-orange-400">Naan Stop Wok!</span>
+            </h1>
+            <p className="mt-4 text-xl text-gray-100">
+              Savor the fusion of Asian cuisine, prepared fresh daily with love and tradition.
+            </p>
+            <div className="mt-8 flex gap-4">
+              <Link
+                href="/menu"
+                className="inline-flex items-center rounded-full bg-orange-600 px-6 py-3 text-base font-medium text-white shadow-lg hover:bg-orange-700 transition-all hover:scale-105"
+              >
+                View Menu
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Link>
+              <Link
+                href="/reservations"
+                className="inline-flex items-center rounded-full bg-white px-6 py-3 text-base font-medium text-orange-600 shadow-lg hover:bg-gray-50 transition-all hover:scale-105"
+              >
+                Book a Table
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Specials Section */}
+      <section className="py-16 bg-amber-50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              Our Specials
+            </h2>
+            <p className="mt-4 text-lg text-gray-600">
+              Discover our chef's carefully crafted signature dishes
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                name: "Butter Chicken Thali",
+                description: "Experience a flavor explosion with our Butter Chicken! Succulent, spiced chicken simmered in a velvety, creamy tomato sauce, served with warm naan and fluffy basmati rice.",
+                price: "$18.99",
+                image: "/ButterChicken.jpg?height=300&width=400"
+              },
+              {
+                name: "Mapo Tofu Dish",
+                description: "Savor the bold flavors of our Mapo Tofu! Silken tofu simmered in a spicy, aromatic sauce made with savory minced meat and Sichuan peppercorns.",
+                price: "$16.99",
+                image: "/MapoTofu.jpg?height=300&width=400"
+              },
+              {
+                name: "Fusion Noodle Bowl",
+                description: "Our signature noodle bowl combines the best of both worlds with hand-pulled noodles, aromatic spices, and fresh vegetables.",
+                price: "$17.99",
+                image: "/Noodles.jpg?height=300&width=400"
+              }
+            ].map((dish) => (
+              <div
+                key={dish.name}
+                className="group relative overflow-hidden rounded-2xl bg-white shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl"
+              >
+                <div className="aspect-w-16 aspect-h-9 relative">
+                  <Image
+                    src={dish.image}
+                    alt={dish.name}
+                    width={400}
+                    height={244}
+                    className="object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900">{dish.name}</h3>
+                  <p className="mt-2 text-gray-600 line-clamp-3">{dish.description}</p>
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-lg font-bold text-orange-600">{dish.price}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
+
