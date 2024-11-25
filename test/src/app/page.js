@@ -5,7 +5,7 @@ import { ChevronRight, Menu } from 'lucide-react'
 export default function Home() {
   return (
     <div className="min-h-screen bg-amber-50">
-
+      
       {/* Hero Section */}
       <div className="relative h-[70vh] overflow-hidden">
         <div className="absolute inset-0">
