@@ -1,5 +1,5 @@
-
 "use client";
+
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 
@@ -9,10 +9,11 @@ const Label = React.forwardRef(({ className, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}
     className={cn(
-      "text-sm font-medium text-black dark:text-white leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      "text-base font-bold text-gray-900 dark:text-white leading-none mb-2",
       className
     )}
-    {...props} />
+    {...props}
+  />
 ));
 Label.displayName = LabelPrimitive.Root.displayName;
 

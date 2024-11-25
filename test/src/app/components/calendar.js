@@ -9,12 +9,18 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
   const [gridSize, setGridSize] = useState(0);
 
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const reservationColors = ["bg-blue-600", "bg-green-600", "bg-yellow-600", "bg-purple-600", "bg-red-600"];
+  const reservationColors = [
+    "bg-orange-100 text-orange-700",
+    "bg-blue-100 text-blue-700",
+    "bg-green-100 text-green-700",
+    "bg-yellow-100 text-yellow-700",
+    "bg-purple-100 text-purple-700",
+  ];
 
   useEffect(() => {
     const updateGridSize = () => {
-      const calendarWidth = Math.min(window.innerWidth, 800);
-      setGridSize(calendarWidth / 7);
+      const calendarWidth = Math.min(window.innerWidth, 800); 
+      setGridSize(calendarWidth / 7); 
     };
 
     updateGridSize();
@@ -24,7 +30,7 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
 
   const getDaysInMonth = () => {
     const startDate = startOfWeek(startOfMonth(currentMonth));
-    const endDate = addDays(startDate, 34);
+    const endDate = addDays(startDate, 34); 
     const days = [];
     let date = startDate;
 
@@ -52,25 +58,19 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
       return (
         <div
           key={index}
-          style={{ width: gridSize, minHeight: gridSize }}
-          className={`relative border border-gray-500 ${
-            isCurrentMonth ? "text-white" : "text-gray-400"
+          className={`relative border border-gray-300 bg-white ${
+            isCurrentMonth ? "text-gray-900" : "text-gray-400"
           }`}
+          style={{ width: gridSize, height: gridSize }}
         >
-          {/* Date in top-right corner */}
-          <div className="absolute top-2 right-2 text-sm">{format(day, "d")}</div>
+          <div className="absolute top-2 right-2 text-sm font-semibold">{format(day, "d")}</div>
 
           {/* Reservations */}
-          <div
-            className="pt-6 space-y-1"
-            style={{
-              paddingTop: `${gridSize * 0.3}px`,
-            }}
-          >
+          <div className="pt-6 space-y-1">
             {dayReservations.map((res, idx) => (
               <div
                 key={idx}
-                className={`rounded-md p-1 text-xs text-white truncate flex justify-between items-center ${
+                className={`rounded-md p-1 text-xs truncate flex justify-between items-center ${
                   reservationColors[idx % reservationColors.length]
                 }`}
                 title={`${res.name} at ${res.time}`}
@@ -82,17 +82,17 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
                 <div className="flex flex-col space-y-1 ml-2">
                   {/* Edit Button */}
                   <button
-                    className="p-1 rounded-full hover:bg-gray-700"
+                    className="p-1 rounded-full hover:bg-gray-100"
                     onClick={() => onEdit(res)}
                   >
-                    <PencilIcon className="h-3 w-3 text-white" />
+                    <PencilIcon className="h-4 w-4 text-gray-700" />
                   </button>
                   {/* Delete Button */}
                   <button
-                    className="p-1 rounded-full hover:bg-red-500"
+                    className="p-1 rounded-full hover:bg-red-100"
                     onClick={() => onDelete(res)}
                   >
-                    <TrashIcon className="h-3 w-3 text-white" />
+                    <TrashIcon className="h-4 w-4 text-red-600" />
                   </button>
                 </div>
               </div>
@@ -104,32 +104,37 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-black text-white">
-      <div className="w-full max-w-5xl p-6">
+    <div className="bg-amber-50">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <button
             onClick={goToPreviousMonth}
-            className="p-2 bg-zinc-700 hover:bg-gray-600 rounded-lg"
+            className="p-2 rounded-full bg-orange-100 hover:bg-orange-200 text-orange-600 transition"
           >
             &larr;
           </button>
-          <h2 className="text-2xl font-bold">{format(currentMonth, "MMMM yyyy")}</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
+            {format(currentMonth, "MMMM yyyy")}
+          </h2>
           <button
             onClick={goToNextMonth}
-            className="p-2 bg-zinc-700 hover:bg-gray-600 rounded-lg"
+            className="p-2 rounded-full bg-orange-100 hover:bg-orange-200 text-orange-600 transition"
           >
             &rarr;
           </button>
         </div>
 
         {/* Days of the Week */}
-        <div className="grid grid-cols-7 text-center font-medium text-gray-400 mb-2">
+        <div
+          className="grid grid-cols-7 gap-0 text-center font-medium text-gray-600 mb-2"
+          style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}
+        >
           {daysOfWeek.map((day) => (
             <div
               key={day}
-              style={{ width: gridSize, height: gridSize * 0.3 }}
-              className="flex items-center justify-center border-b border-gray-500"
+              className="flex items-center justify-center border-b border-gray-300"
+              style={{ height: gridSize * 0.3 }}
             >
               {day}
             </div>
@@ -137,7 +142,12 @@ const Calendar = ({ reservations, onEdit, onDelete }) => {
         </div>
 
         {/* Days Grid */}
-        <div className="grid grid-cols-7 gap-y-1">{renderDayGrid()}</div>
+        <div
+          className="grid grid-cols-7 gap-0"
+          style={{ width: "100%", maxWidth: "800px", margin: "0 auto" }}
+        >
+          {renderDayGrid()}
+        </div>
       </div>
     </div>
   );
