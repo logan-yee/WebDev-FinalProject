@@ -61,7 +61,7 @@ export default function AboutUs() {
                   name: "Sanjeev Kapoor",
                   role: "Head Chef",
                   image: "/Sanjeev.jpg",
-                  bio: "Chef Raj's expertise in Indian spices and traditional cooking methods adds depth and complexity to our fusion creations."
+                  bio: "Chef Sanjeev's expertise in Indian spices and traditional cooking methods adds depth and complexity to our fusion creations."
                 }
               ].map((chef) => (
                 <div key={chef.name} className="flex flex-col items-center text-center">
