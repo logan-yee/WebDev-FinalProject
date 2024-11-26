@@ -9,14 +9,43 @@ import { IconBrandGoogle } from "@tabler/icons-react";
 export const AuthSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  console.log(auth?.currentUser?.email);
+  const validateInputs = () => {
+    // Clear previous errors
+    setError("");
+
+    // Email validation
+    if (!email) {
+      setError("Email is required.");
+      return false;
+    }
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email address.");
+      return false;
+    }
+
+    // Password validation
+    if (!password) {
+      setError("Password is required.");
+      return false;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return false;
+    }
+
+    return true;
+  };
 
   const signIn = async () => {
+    if (!validateInputs()) return;
+
     try {
       await createUserWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.error(err);
+      setError("Failed to sign up. Please try again.");
     }
   };
 
@@ -25,18 +54,27 @@ export const AuthSignup = () => {
       await signInWithPopup(auth, googleProvider);
     } catch (err) {
       console.error(err);
+      setError("Failed to sign up with Google. Please try again.");
     }
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-lg p-6 shadow-lg bg-white border border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-900 text-center">
-      Sign Up or Log In
+    <div className="max-w-md w-full mx-auto rounded-lg p-8 shadow-lg bg-white border border-gray-200">
+      <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">
+        Sign Up or Log In
       </h2>
-      <form className="mt-6 space-y-6">
+
+      {/* Display Error Message */}
+      {error && (
+        <div className="mb-4 text-red-600 text-sm text-center bg-red-50 p-2 rounded-md">
+          {error}
+        </div>
+      )}
+
+      <form className="space-y-6">
         {/* Email Input */}
-        <div className="flex flex-col space-y-2 w-full">
-          <Label htmlFor="email" className="text-gray-800 font-medium">
+        <div className="flex flex-col space-y-2">
+          <Label htmlFor="email" className="text-gray-900">
             Email Address
           </Label>
           <Input
@@ -45,13 +83,12 @@ export const AuthSignup = () => {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border-gray-300 focus:ring-orange-500 focus:border-orange-500"
           />
         </div>
 
         {/* Password Input */}
-        <div className="flex flex-col space-y-2 w-full">
-          <Label htmlFor="password" className="text-gray-800 font-medium">
+        <div className="flex flex-col space-y-2">
+          <Label htmlFor="password" className="text-gray-900">
             Password
           </Label>
           <Input
@@ -60,13 +97,12 @@ export const AuthSignup = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border-gray-300 focus:ring-orange-500 focus:border-orange-500"
           />
         </div>
 
         {/* Sign-Up Button */}
         <button
-          className="w-full bg-orange-600 text-white rounded-lg h-10 font-semibold shadow-md hover:bg-orange-700 transition"
+          className="w-full bg-orange-600 text-white rounded-full h-12 font-semibold shadow-md hover:bg-orange-700 transition"
           type="button"
           onClick={signIn}
         >
@@ -82,11 +118,11 @@ export const AuthSignup = () => {
 
         {/* Sign Up With Google */}
         <button
-          className="flex items-center justify-center w-full bg-amber-50 text-orange-600 rounded-lg h-10 font-semibold shadow-md hover:bg-amber-100 transition space-x-2"
+          className="flex items-center justify-center w-full bg-amber-50 text-orange-600 rounded-full h-12 font-semibold shadow-md hover:bg-amber-100 transition space-x-2"
           type="button"
           onClick={signInWithGoogle}
         >
-          <IconBrandGoogle className="h-5 w-5 text-orange-600" />
+          <IconBrandGoogle className="h-6 w-6 text-orange-600" />
           <span>Sign Up with Google</span>
         </button>
       </form>
