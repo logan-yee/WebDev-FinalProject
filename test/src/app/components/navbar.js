@@ -39,7 +39,7 @@ const Navbar = () => {
                   href={href}
                   className={`text-sm font-medium transition-colors ${
                       isActive
-                        ? "text-orange-600 font-extrabold underline underline-offset-4"
+                        ? "text-orange-600 font-black underline underline-offset-4"
                         : "text-gray-700 hover:text-orange-600"
                     }`}
                 >
