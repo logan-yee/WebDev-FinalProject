@@ -15,7 +15,7 @@ export default function AboutUs() {
       className="object-cover"
       priority
     />
-    <div className="absolute inset-0 bg-amber-900/70 mix-blend-multiply" />
+    <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50" />
   </div>
   <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
     <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
