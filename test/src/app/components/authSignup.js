@@ -29,54 +29,64 @@ export const AuthSignup = () => {
   };
 
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-black">
-      <h2 className="font-bold text-xl text-neutral-800 light:text-neutral-200">
-        Sign Up for / Log in to Your Account
+    <div className="max-w-md w-full mx-auto rounded-lg p-6 shadow-lg bg-white border border-gray-200">
+      <h2 className="text-2xl font-bold text-gray-900 text-center">
+      Sign Up or Log In
       </h2>
-      <form className="my-8 space-y-6">
+      <form className="mt-6 space-y-6">
         {/* Email Input */}
         <div className="flex flex-col space-y-2 w-full">
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="email" className="text-gray-800 font-medium">
+            Email Address
+          </Label>
           <Input
             id="email"
             placeholder="Enter your email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="border-gray-300 focus:ring-orange-500 focus:border-orange-500"
           />
         </div>
 
         {/* Password Input */}
         <div className="flex flex-col space-y-2 w-full">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="text-gray-800 font-medium">
+            Password
+          </Label>
           <Input
             id="password"
             placeholder="Enter your password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="border-gray-300 focus:ring-orange-500 focus:border-orange-500"
           />
         </div>
 
         {/* Sign-Up Button */}
         <button
-          className="w-full bg-gradient-to-br from-black to-neutral-600 dark:from-zinc-900 dark:to-zinc-800 text-white rounded-md h-10 font-medium shadow-md hover:bg-black/80"
+          className="w-full bg-orange-600 text-white rounded-lg h-10 font-semibold shadow-md hover:bg-orange-700 transition"
           type="button"
           onClick={signIn}
         >
-          Sign Up / Log in
+          Sign Up / Log In
         </button>
 
         {/* Divider */}
-        <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-4 h-[1px] w-full" />
+        <div className="flex items-center space-x-2">
+          <div className="flex-1 h-[1px] bg-gray-300"></div>
+          <span className="text-sm text-gray-600">or</span>
+          <div className="flex-1 h-[1px] bg-gray-300"></div>
+        </div>
 
         {/* Sign Up With Google */}
         <button
-          className="flex items-center justify-center w-full bg-gray-50 dark:bg-zinc-900 text-black dark:text-white rounded-md h-10 font-medium shadow-md hover:bg-gray-100 dark:hover:bg-zinc-800 space-x-2"
+          className="flex items-center justify-center w-full bg-amber-50 text-orange-600 rounded-lg h-10 font-semibold shadow-md hover:bg-amber-100 transition space-x-2"
           type="button"
           onClick={signInWithGoogle}
         >
-          <IconBrandGoogle className="h-5 w-5 text-neutral-800 dark:text-neutral-300" />
+          <IconBrandGoogle className="h-5 w-5 text-orange-600" />
           <span>Sign Up with Google</span>
         </button>
       </form>

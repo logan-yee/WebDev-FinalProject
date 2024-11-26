@@ -56,10 +56,10 @@ const Navbar = () => {
               <Menu className="h-6 w-6 text-gray-700" />
             </button>
             <Link
-              href="/Signup"
+               href="/signup"
               className="inline-flex items-center rounded-full bg-orange-600 px-4 py-2 text-sm font-medium text-white hover:bg-orange-700 transition-colors"
-            >
-              Sign up / Log In
+              >
+               Sign up / Log In
             </Link>
           </div>
         </div>
