@@ -5,15 +5,15 @@ This project is a simple restaurant website that displays menu items, restaurant
 
 ## Tech Stack
 
-- **Frontend**: React, CSS
+- **Frontend**: React, CSS,  TailwindCSS
 - **Backend**: Node.js, Express.js
-- **Data Storage**: JSON files
+- **Data Storage**: Firebase Cloud Firestore
 
 ## Features
 
 - **Home Page**: Displays restaurant information and upcoming events.
 - **Menu Page**: Lists food and drink options.
-- **Reservations**: Users can submit reservations, stored temporarily in a JSON file.
+- **Reservations**: Users can submit reservations, stored temporarily in a Clound Firestore Database.
 
 ## Project Setup
 
@@ -31,29 +31,12 @@ This project is a simple restaurant website that displays menu items, restaurant
     npm install
     ```
 
-3. Start the backend server:
-    ```bash
-    cd backend
-    npm start
-    ```
-
-4. Start the frontend development server:
-    ```bash
-    cd ../frontend
-    npm start
-    ```
-
 5. Navigate to `http://localhost:3000` in your browser.
 
 ## API Endpoints (Backend)
 
 1. **GET /api/menu**: Retrieve all menu items.
 2. **POST /api/reservations**: Submit a new reservation (stored in `reservations.json`).
-
-## Example Usage
-
-- **Adding Menu Items**: Update `backend/data/menu.json` with new items.
-- **Viewing Reservations**: All reservations are stored in `backend/data/reservations.json`.
 
 ## Future Improvements
 
