@@ -109,3 +109,5 @@ export default function Home() {
   )
 }
 
+//V1 - DOES NOT INCLUDE FIRESTORE IMPLEMENTATION!!
+//V2 - Work in progress!
