@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { auth } from "../config/firebase"; // Your Firebase instance
 import { onAuthStateChanged, signOut } from "firebase/auth"; // Import signOut here
 
 const Navbar = () => {
+  const pathname = usePathname();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -49,15 +51,24 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {["Menu", "About Us", "Reservations", "Contact"].map((item) => (
+              {["Menu", "About Us", "Reservations", "Contact"].map((item) => {
+              const href = `/${item.toLowerCase().replace(" ", "-")}`;
+              const isActive = pathname === href;
+              
+              return (
                 <Link
                   key={item}
-                  href={`/${item.toLowerCase().replace(" ", "-")}`}
-                  className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                  href={href}
+                  className={`text-sm transition-colors ${
+                      isActive
+                        ? "text-orange-600 font-bold underline underline-offset-4"
+                        : "text-gray-700 hover:text-orange-600"
+                    }`}
                 >
                   {item}
                 </Link>
-              ))}
+              );
+              })}
             </div>
           </div>
 
