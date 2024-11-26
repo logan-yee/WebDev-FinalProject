@@ -9,6 +9,7 @@ import { Calendar } from "@/app/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
+import AlertModal from "@/app/components/AlertModal";
 
 const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, specialAccommodations }) => {
   const [formDate, setFormDate] = useState(date || null);
@@ -23,28 +24,33 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, special
     setFormSpecialAccommodations(specialAccommodations || "");
   }, [date, time, name, specialAccommodations]);
 
+  const [isAlertOpen, setAlertOpen] = useState(false); // Alert modal state
+  const [alertMessage, setAlertMessage] = useState(""); // Message for alert modal
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (!formDate || !formTime || !formName) {
-      alert("Please fill in all required fields.");
+      setAlertMessage("Please fill in all required fields."); 
+      setAlertOpen(true); 
       return;
     }
-
+  
     onSubmit({
       date: formDate,
       time: formTime,
       name: formName,
       specialAccommodations: formSpecialAccommodations,
     });
-
+  
     setFormDate(null);
     setFormTime("");
     setFormName("");
     setFormSpecialAccommodations("");
+    
     onClose();
   };
-
+  
   if (!isOpen) return null;
 
   return (
@@ -141,7 +147,14 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, special
           </div>
         </form>
       </div>
+           {/* Alert Modal */}
+           <AlertModal
+        isOpen={isAlertOpen}
+        onClose={() => setAlertOpen(false)}
+        message={alertMessage}
+        />
     </div>
+    
   );
 };
 
