@@ -52,7 +52,7 @@ const Reservations = () => {
 
   const handleAddReservationClick = () => {
     if (!user) {
-      setAlertMessage("You must be signed in to make a reservation.");
+      setAlertMessage("Please sign in to make a reservation.");
       setAlertOpen(true);
       return;
     }

@@ -73,10 +73,13 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, special
                   selected={formDate}
                   onSelect={setFormDate}
                   initialFocus
+                  // Disable past dates
+                  disabled={(date) => date < new Date().setHours(0, 0, 0, 0)} 
                 />
               </PopoverContent>
             </Popover>
           </div>
+
 
           {/* Time Input */}
           <div>
