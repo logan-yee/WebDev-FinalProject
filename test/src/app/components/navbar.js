@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation"
 import { Menu } from "lucide-react";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -26,15 +29,24 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-8">
-              {["Menu", "About Us", "Reservations", "Contact"].map((item) => (
+              {["Menu", "About Us", "Reservations", "Contact"].map((item) => {
+                const href = `/${item.toLowerCase().replace(" ", "-")}`;
+                const isActive = pathname === href;
+
+                return (
                 <Link
                   key={item}
-                  href={`/${item.toLowerCase().replace(" ", "-")}`}
-                  className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                  href={href}
+                  className={`text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-orange-600 font-extrabold underline underline-offset-4"
+                        : "text-gray-700 hover:text-orange-600"
+                    }`}
                 >
                   {item}
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
 
