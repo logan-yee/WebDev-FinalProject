@@ -1,15 +1,30 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { auth, googleProvider } from "../config/firebase";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { IconBrandGoogle } from "@tabler/icons-react";
+
+
 
 export const AuthSignup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const router = useRouter(); // Use the hook correctly
+
+   // Redirect user if they're already signed in
+   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Redirect to home page if user is signed in
+        router.push("/");
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
 
   const validateInputs = () => {
     // Clear previous errors
