@@ -50,7 +50,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
+            <div className="ml-auto flex items-center space-x-8">
               {["Menu", "About Us", "Reservations", "Contact"].map((item) => {
               const href = `/${item.toLowerCase().replace(" ", "-")}`;
               const isActive = pathname === href;
