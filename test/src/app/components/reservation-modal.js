@@ -10,8 +10,15 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/pop
 import { Input } from "@/app/components/ui/input";
 import { Label } from "@/app/components/ui/label";
 import AlertModal from "@/app/components/AlertModal";
+import { db } from "@/app/config/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
-const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, specialAccommodations }) => {
+
+const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, specialAccommodations,user }) => {
+
+  const [isAlertOpen, setAlertOpen] = useState(false); // Alert modal state
+  const [alertMessage, setAlertMessage] = useState(""); // Message for the alert modal
+
   const [formDate, setFormDate] = useState(date || null);
   const [formTime, setFormTime] = useState(time || "");
   const [formName, setFormName] = useState(name || "");
@@ -24,31 +31,56 @@ const ReservationModal = ({ isOpen, onClose, onSubmit, date, time, name, special
     setFormSpecialAccommodations(specialAccommodations || "");
   }, [date, time, name, specialAccommodations]);
 
-  const [isAlertOpen, setAlertOpen] = useState(false); // Alert modal state
-  const [alertMessage, setAlertMessage] = useState(""); // Message for alert modal
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
+    // Validate form fields
     if (!formDate || !formTime || !formName) {
       setAlertMessage("Please fill in all required fields."); 
       setAlertOpen(true); 
       return;
     }
-  
-    onSubmit({
-      date: formDate,
-      time: formTime,
-      name: formName,
-      specialAccommodations: formSpecialAccommodations,
-    });
-  
-    setFormDate(null);
-    setFormTime("");
-    setFormName("");
-    setFormSpecialAccommodations("");
     
-    onClose();
+  console.log("Submitting reservation...");
+
+    try {
+      // Save reservation to Firestore
+      const reservationDoc = await addDoc(collection(db, "reservations"), {
+        uid: user.uid, // Current user's UID from Firebase Auth
+        date: formDate.toISOString(), // Convert Date object to ISO string
+        time: formTime,
+        name: formName,
+        specialAccommodations: formSpecialAccommodations || "None", // Default to "None"
+      });
+  
+      // Add reservation locally (to reflect in UI immediately)
+      onSubmit({
+        id: reservationDoc.id, // Use Firestore-generated document ID
+        date: formDate,
+        time: formTime,
+        name: formName,
+        specialAccommodations: formSpecialAccommodations || "None",
+      });
+  
+      // Show success message
+  
+      // Reset form fields
+      setFormDate(null);
+      setFormTime("");
+      setFormName("");
+      setFormSpecialAccommodations("");
+  
+      // Close the modal
+      onClose();
+      
+
+      console.log("Reservation successfully added.");
+
+    } catch (error) {
+      console.error("Error adding reservation:", error);
+      setAlertMessage("Failed to save reservation. Please try again."); // Error alert
+      setAlertOpen(true);
+    }
   };
   
   if (!isOpen) return null;
