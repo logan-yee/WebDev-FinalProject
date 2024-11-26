@@ -1,15 +1,29 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Calendar from "../components/calendar";
 import ReservationModal from "../components/reservation-modal";
+import AlertModal from "../components/AlertModal"; // Import the custom AlertModal component
 import { Button } from "@/app/components/ui/button";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/app/config/firebase";
 
 const Reservations = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [reservations, setReservations] = useState([]);
-  const [editingReservation, setEditingReservation] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false); // Reservation modal state
+  const [isAlertOpen, setAlertOpen] = useState(false); // Alert modal state
+  const [alertMessage, setAlertMessage] = useState(""); // Message for alert modal
+  const [reservations, setReservations] = useState([]); // Reservation list
+  const [editingReservation, setEditingReservation] = useState(null); // Reservation being edited
+  const [user, setUser] = useState(null); // Authenticated user
+
+  // Check user authentication status
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const addOrUpdateReservation = (reservation) => {
     if (editingReservation) {
@@ -34,6 +48,16 @@ const Reservations = () => {
     setReservations((prevReservations) =>
       prevReservations.filter((res) => res !== reservation)
     );
+  };
+
+  const handleAddReservationClick = () => {
+    if (!user) {
+      setAlertMessage("You must be signed in to make a reservation.");
+      setAlertOpen(true);
+      return;
+    }
+    setEditingReservation(null);
+    setModalOpen(true);
   };
 
   return (
@@ -68,10 +92,7 @@ const Reservations = () => {
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-gray-900">Reservations</h2>
           <Button
-            onClick={() => {
-              setEditingReservation(null);
-              setModalOpen(true);
-            }}
+            onClick={handleAddReservationClick}
             className="bg-orange-600 hover:bg-orange-700 text-white py-2 px-4 rounded-full"
           >
             Add Reservation
@@ -95,6 +116,13 @@ const Reservations = () => {
         time={editingReservation?.time || ""}
         name={editingReservation?.name || ""}
         specialAccommodations={editingReservation?.specialAccommodations || ""}
+      />
+
+      {/* Alert Modal */}
+      <AlertModal
+        isOpen={isAlertOpen}
+        onClose={() => setAlertOpen(false)}
+        message={alertMessage}
       />
     </div>
   );
